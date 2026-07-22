@@ -14,5 +14,5 @@ source "$(dirname "$0")/../_env.sh"
 echo "=== depth bands write | $(date) ==="
 python -u -m experiments.localization.depth_bands \
   --model ${EXP_MODEL:-llama7b} --quantizer aqlm2 --projections write \
-  --n_eval 200 --n_reasoning 50
+  --n_eval 200 --n_reasoning ${N_REASONING:-100}
 echo "=== done | $(date) ==="
