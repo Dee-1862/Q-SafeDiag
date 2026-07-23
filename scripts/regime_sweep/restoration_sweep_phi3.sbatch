@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/f3a_phi3_%j.out
 #SBATCH --error=scripts/logs/f3a_phi3_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 
 echo "=== restoration sweep Phi-3 | $(date) ==="

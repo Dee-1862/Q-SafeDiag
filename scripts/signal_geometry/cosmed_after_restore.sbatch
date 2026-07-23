@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/cosmed_restore_%j.out
 #SBATCH --error=scripts/logs/cosmed_restore_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # RQ1 mediation control: cosmed under quant / +read / +write / +both restore.
 echo "=== cosmed after restoration | ${EXP_MODEL:-llama7b}/aqlm2 | $(date) ==="

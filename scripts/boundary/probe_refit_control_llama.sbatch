@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/refit_llama_%j.out
 #SBATCH --error=scripts/logs/refit_llama_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 
 echo "=== probe refit control Llama | $(date) ==="

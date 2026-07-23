@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/probe_geo_sweep_%j.out
 #SBATCH --error=scripts/logs/probe_geo_sweep_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Extended probe-geometry sweep (from scripts_old/probe_geometry_*.sbatch).
 

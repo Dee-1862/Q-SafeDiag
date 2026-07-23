@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/arditi_llama_%j.out
 #SBATCH --error=scripts/logs/arditi_llama_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Sec. 5 : behavioral direction (logit refusal-score selection).
 

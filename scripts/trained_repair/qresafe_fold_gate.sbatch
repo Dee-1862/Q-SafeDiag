@@ -8,7 +8,7 @@
 #SBATCH --mem=64G
 #SBATCH --output=scripts/logs/fold_gate_%j.out
 #SBATCH --error=scripts/logs/fold_gate_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Zero-delta bit-identity + delta fold smoke before DPO.
 

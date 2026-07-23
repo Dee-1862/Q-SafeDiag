@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/qresafe_pairs_%j.out
 #SBATCH --error=scripts/logs/qresafe_pairs_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Tables 6-7 data : build pairs before DPO.
 

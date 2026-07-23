@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/tdequant_%j.out
 #SBATCH --error=scripts/logs/tdequant_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Section 8 -- targeted 4-bit (AWQ) restoration into the 2-bit (AQLM) cell.
 # Two comparable read-side conditions so we can see if the localized middle-band

@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/qresafe_dpo_%j.out
 #SBATCH --error=scripts/logs/qresafe_dpo_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Submit: sbatch scripts/trained_repair/qresafe_dpo.sbatch read|write|full
 

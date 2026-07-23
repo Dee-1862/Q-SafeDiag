@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/f1_drift_llama_%j.out
 #SBATCH --error=scripts/logs/f1_drift_llama_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Table 1 : refusal-direction cos-sim drift across quantizers (RESULTS.md).
 

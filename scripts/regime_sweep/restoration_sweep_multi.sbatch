@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/f3a_multi_%j.out
 #SBATCH --error=scripts/logs/f3a_multi_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # From scripts_old/f3a_static_restoration_*.sbatch (condensed).
 

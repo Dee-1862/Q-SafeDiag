@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/probe_acc_llama_%j.out
 #SBATCH --error=scripts/logs/probe_acc_llama_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 
 echo "=== probe accuracy multi-model/quant | $(date) ==="

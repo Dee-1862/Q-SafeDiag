@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/lrqat_llama_%j.out
 #SBATCH --error=scripts/logs/lrqat_llama_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Table 7 -- ONE matched-budget LR-QAT cell (role x n_bits) per job, so the four
 # cells run in PARALLEL instead of 4x sequential in one 24h job (which timed out).

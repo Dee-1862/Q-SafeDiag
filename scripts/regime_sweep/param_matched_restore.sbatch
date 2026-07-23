@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/parammatch_%j.out
 #SBATCH --error=scripts/logs/parammatch_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # RQ3 control: read subset matched to the WRITE param budget vs full write.
 echo "=== param-matched restore | ${EXP_MODEL:-llama7b}/aqlm2 | $(date) ==="

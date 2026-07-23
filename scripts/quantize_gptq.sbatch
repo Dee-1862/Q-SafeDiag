@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/quantize_gptq_%j.out
 #SBATCH --error=scripts/logs/quantize_gptq_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # Reproducible GPTQ quantization of one base model via GPTQModel.
 # Submit one per model to run them in parallel:

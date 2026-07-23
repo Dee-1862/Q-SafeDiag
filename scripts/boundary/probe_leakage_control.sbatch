@@ -8,7 +8,7 @@
 #SBATCH --mem=128G
 #SBATCH --output=scripts/logs/leak_%j.out
 #SBATCH --error=scripts/logs/leak_%j.err
-source "$(dirname "$0")/../_env.sh"
+source "${SLURM_SUBMIT_DIR}/scripts/_env.sh"
 
 # RQ1 leakage control: FP32 refusal probe vs TF-IDF surface baseline on XSTest
 # (safe = surface-harmful-but-benign) + HarmBench transfer. FP32 only.
