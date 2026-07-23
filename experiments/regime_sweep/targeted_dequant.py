@@ -86,7 +86,7 @@ def main():
     if args.layer_lo is not None and args.layer_hi is not None:
         layer_range = (args.layer_lo, args.layer_hi)
         band = f"L{args.layer_lo}-{args.layer_hi}"
-    variant = f"{args.role}_{src}4_{band}"   # e.g. read_awq4_all / read_awq4_L11-22
+    variant = f"{args.role}_{src}_{band}"   # e.g. read_awq_L11-22 / read_gptq4_all
 
     items = load_wildjailbreak_prompts(n_samples=args.n_eval, config="eval")
     behaviors = [_extract_behavior(it) for it in items]
