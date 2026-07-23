@@ -5,8 +5,8 @@ from pathlib import Path
 
 import torch
 
-from core.datasets import load_arc_challenge, load_wildjailbreak_prompts
-from core.evaluation import _extract_behavior, classify_batch, generate_only
+from core.datasets import load_arc_challenge, load_wildjailbreak_prompts, load_xstest
+from core.evaluation import _extract_behavior, classify_batch, eval_xstest, generate_only
 from core.manifest import RunConfig, save_result
 from core.model_loader import load_fp32, load_quantized
 from core.restoration import (
@@ -91,8 +91,9 @@ def main():
     items = load_wildjailbreak_prompts(n_samples=args.n_eval, config="eval")
     behaviors = [_extract_behavior(it) for it in items]
     arc_items = load_arc_challenge(n_samples=args.n_reasoning)
+    xstest_items = load_xstest()
 
-    all_responses, all_arc = {}, {}
+    all_responses, all_arc, all_xstest = {}, {}, {}
 
     # FP32 reference + upper-bound source weights
     fp32_model, tokenizer = load_fp32(args.model)
@@ -104,6 +105,7 @@ def main():
           f"{eff['restored_fraction']*100:.1f}% of quant params)")
     all_responses["fp32"] = generate_only(fp32_model, tokenizer, items, desc="FP32")
     all_arc["fp32"] = measure_arc(fp32_model, tokenizer, arc_items)
+    all_xstest["fp32"] = eval_xstest(fp32_model, tokenizer, xstest_items)["false_refusal_rate"]
     del fp32_model
     gc.collect()
     torch.cuda.empty_cache()
@@ -119,6 +121,7 @@ def main():
     q_model, _ = load_quantized(args.model, quantizer=qtz)
     all_responses[qtz] = generate_only(q_model, tokenizer, items, desc=qtz)
     all_arc[qtz] = measure_arc(q_model, tokenizer, arc_items)
+    all_xstest[qtz] = eval_xstest(q_model, tokenizer, xstest_items)["false_refusal_rate"]
     del q_model
     gc.collect()
     torch.cuda.empty_cache()
@@ -129,6 +132,7 @@ def main():
         restore_projections(q_model, weights, projs, layer_range=layer_range)
         all_responses[tag] = generate_only(q_model, tokenizer, items, desc=tag)
         all_arc[tag] = measure_arc(q_model, tokenizer, arc_items)
+        all_xstest[tag] = eval_xstest(q_model, tokenizer, xstest_items)["false_refusal_rate"]
         del q_model
         gc.collect()
         torch.cuda.empty_cache()
@@ -158,6 +162,7 @@ def main():
         "damage_pp": q_asr - asr["fp32"],
         "role": args.role, "layer_range": list(layer_range) if layer_range else None,
         "asr_per_condition": asr, "arc_per_condition": all_arc,
+        "xstest_false_refusal": all_xstest,
         "recovery_pp_4bit": rec_4bit, "recovery_pp_fp32": rec_fp32,
         "frac_of_fp32_recovery": frac,
         "effective_bits": eff,
