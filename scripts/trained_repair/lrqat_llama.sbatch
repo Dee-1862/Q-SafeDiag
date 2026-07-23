@@ -18,9 +18,12 @@ ROLE="${LRQAT_ROLE:-read}"
 BITS="${LRQAT_BITS:-2}"
 
 echo "=== LR-QAT | ${MODEL}/aqlm2 role=${ROLE} int${BITS} | $(date) ==="
+# ARC/XSTest n default to the paper-standard 100/250 (override via env) so LR-QAT
+# evals sit on the same n as tab:f3a/headline. n_eval (ASR) stays 200 everywhere.
 BUDGET_ARGS="--steps 3000 --lr 1e-4 --rank 32 --alpha 64 \
              --seq_len 512 --grad_accum 8 --n_train_docs 4000 \
-             --group_size 128 --n_eval 200 --n_reasoning 50 --n_xstest 50"
+             --group_size 128 --n_eval 200 \
+             --n_reasoning ${N_REASONING:-100} --n_xstest ${N_XSTEST:-250}"
 
 python -u -m experiments.trained_repair.lrqat \
   --model ${MODEL} --quantizer aqlm2 --role ${ROLE} --n_bits ${BITS} ${BUDGET_ARGS}
